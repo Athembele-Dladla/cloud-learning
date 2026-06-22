@@ -6,7 +6,7 @@ A collection of beginner cloud projects built while learning cloud platforms lik
 
 | Project | Description | Platform | Status |
 |---|---|---|---|
-| `static-website` | HTML/CSS site hosted on cloud storage | AWS S3 / Firebase | 🔜 Coming Soon |
+| `static-website` | HTML/CSS site hosted on cloud storage | AWS S3 / Firebase | 🚧 Currently in progress |
 | `serverless-hello-world` | HTTP-triggered serverless function | AWS Lambda / GCF | 🔜 Coming Soon |
 | `url-shortener` | Short URL generator using a cloud database | AWS + DynamoDB | 🔜 Coming Soon |
 | `weather-dashboard` | Fetches and stores weather data | GCP + Firestore | 🔜 Coming Soon |
