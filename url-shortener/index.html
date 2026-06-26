@@ -47,7 +47,13 @@
       text-align: center;
       display: none;
     }
-    #result a { color: #2c3e50; font-weight: bold; }
+    #result a { color: #2c3e50; font-weight: bold; word-break: break-all; }
+    #error {
+      margin-top: 1rem;
+      color: red;
+      text-align: center;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -55,6 +61,7 @@
     <h1>🔗 URL Shortener</h1>
     <input type="text" id="urlInput" placeholder="Paste your long URL here..." />
     <button onclick="shortenUrl()">Shorten</button>
+    <div id="error"></div>
     <div id="result">
       <p>Your short URL:</p>
       <a id="shortUrl" href="#" target="_blank"></a>
@@ -63,20 +70,36 @@
 
   <script>
     async function shortenUrl() {
-      const original_url = document.getElementById('urlInput').value;
+      const original_url = document.getElementById('urlInput').value.trim();
       if (!original_url) return alert('Please enter a URL');
 
-      const response = await fetch('/.netlify/functions/shorten', {
-        method: 'POST',
-        body: JSON.stringify({ original_url })
-      });
+      document.getElementById('result').style.display = 'none';
+      document.getElementById('error').style.display = 'none';
 
-      const data = await response.json();
-      const shortUrl = `${window.location.origin}/.netlify/functions/redirect?code=${data.short_code}`;
+      try {
+        const response = await fetch('/.netlify/functions/shorten', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ original_url })
+        });
 
-      document.getElementById('shortUrl').href = shortUrl;
-      document.getElementById('shortUrl').textContent = shortUrl;
-      document.getElementById('result').style.display = 'block';
+        const data = await response.json();
+
+        if (!response.ok) {
+          document.getElementById('error').textContent = 'Error: ' + (data.error || 'Something went wrong');
+          document.getElementById('error').style.display = 'block';
+          return;
+        }
+
+        const shortUrl = `https://athembele-url-shortener.netlify.app/.netlify/functions/redirect?code=${data.short_code}`;
+        document.getElementById('shortUrl').href = shortUrl;
+        document.getElementById('shortUrl').textContent = shortUrl;
+        document.getElementById('result').style.display = 'block';
+
+      } catch (err) {
+        document.getElementById('error').textContent = 'Network error: ' + err.message;
+        document.getElementById('error').style.display = 'block';
+      }
     }
   </script>
 </body>
