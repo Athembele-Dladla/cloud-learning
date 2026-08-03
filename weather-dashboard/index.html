@@ -40,3 +40,64 @@
       font-size: 1rem;
       outline: none;
     }
+    input::placeholder { color: rgba(255,255,255,0.6); }
+    button {
+      padding: 0.75rem 1.25rem;
+      background: #e94560;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background: #c73652; }
+    .weather-card { text-align: center; display: none; }
+    .weather-card img { width: 80px; height: 80px; }
+    .temp { font-size: 4rem; font-weight: bold; margin: 0.5rem 0; }
+    .description { font-size: 1.2rem; text-transform: capitalize; margin-bottom: 1.5rem; color: rgba(255,255,255,0.8); }
+    .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .detail-item { text-align: center; }
+    .detail-item .value { font-size: 1.2rem; font-weight: bold; }
+    .detail-item .label { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
+    .location { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.25rem; }
+    #error { color: #e94560; text-align: center; display: none; margin-top: 1rem; }
+    .loading { text-align: center; display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌤️ Weather Dashboard</h1>
+    <div class="search">
+      <input type="text" id="cityInput" placeholder="Enter city name..." />
+      <button onclick="getWeather()">Search</button>
+    </div>
+    <div class="loading" id="loading">Fetching weather...</div>
+    <div id="error"></div>
+    <div class="weather-card" id="weatherCard">
+      <div class="location" id="location"></div>
+      <img id="weatherIcon" src="" alt="weather icon" />
+      <div class="temp" id="temp"></div>
+      <div class="description" id="description"></div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="value" id="feelsLike"></div>
+          <div class="label">Feels Like</div>
+        </div>
+        <div class="detail-item">
+          <div class="value" id="humidity"></div>
+          <div class="label">Humidity</div>
+        </div>
+        <div class="detail-item">
+          <div class="value" id="windSpeed"></div>
+          <div class="label">Wind Speed</div>
+        </div>
+      </div>
+    </div>
+  </div>
