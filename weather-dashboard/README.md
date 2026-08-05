@@ -21,3 +21,13 @@ A live weather dashboard that fetches and displays real-time weather data for an
 - ☁️ Drifting clouds when overcast
 - 🌙 Night mode after 7pm
 - Search any city worldwide
+
+## ☁️ Cloud Concept Learned
+> Serverless functions consuming third-party REST APIs and displaying live data in the browser.
+
+## How It Works
+1. Enter a city name in the search box
+2. The frontend calls a Netlify Function
+3. The function fetches live weather data from OpenWeatherMap
+4. Temperature, humidity, wind speed and conditions are displayed
+5. The background animates based on the current weather
