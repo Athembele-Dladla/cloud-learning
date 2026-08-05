@@ -10,8 +10,8 @@ A collection of beginner cloud projects built while learning cloud platforms.
 | `static-website` | HTML/CSS site hosted on cloud storage | GitHub Pages | ✅ Done |
 | `serverless-hello-world` | HTTP-triggered serverless function | Netlify Functions | ✅ Done |
 | `url-shortener` | Short URL generator using a cloud database | Netlify Functions + Supabase | ✅ Done |
-| `weather-dashboard` | Fetches and displays live weather data | Netlify Functions + OpenWeatherMap | 🚧 Currently in progress |
-| `file-upload-app` | Upload files to cloud storage | Firebase Storage | 🔜 Coming Soon |
+| `weather-dashboard` | Fetches and displays live weather data | Netlify Functions + OpenWeatherMap | ✅ Done |
+| `file-upload-app` | Upload files to cloud storage | Firebase Storage | 🚧 Currently in progress |
 
 ## 🛠️ Tools & Platforms
 - **Netlify** — Static hosting, Serverless Functions
