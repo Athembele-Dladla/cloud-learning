@@ -6,146 +6,23 @@
   <title>Weather Dashboard</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       color: white;
-    }
-    .container {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 2rem;
-      width: 100%;
-      max-width: 500px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    h1 { text-align: center; margin-bottom: 1.5rem; font-size: 1.8rem; }
-    .search {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-    }
-    input {
-      flex: 1;
-      padding: 0.75rem;
-      border: none;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.2);
-      color: white;
-      font-size: 1rem;
-      outline: none;
-    }
-    input::placeholder { color: rgba(255,255,255,0.6); }
-    button {
-      padding: 0.75rem 1.25rem;
-      background: #e94560;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    button:hover { background: #c73652; }
-    .weather-card { text-align: center; display: none; }
-    .weather-card img { width: 80px; height: 80px; }
-    .temp { font-size: 4rem; font-weight: bold; margin: 0.5rem 0; }
-    .description { font-size: 1.2rem; text-transform: capitalize; margin-bottom: 1.5rem; color: rgba(255,255,255,0.8); }
-    .details {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 1rem;
-      background: rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 1rem;
-    }
-    .detail-item { text-align: center; }
-    .detail-item .value { font-size: 1.2rem; font-weight: bold; }
-    .detail-item .label { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
-    .location { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.25rem; }
-    #error { color: #e94560; text-align: center; display: none; margin-top: 1rem; }
-    .loading { text-align: center; display: none; }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h1>🌤️ Weather Dashboard</h1>
-    <div class="search">
-      <input type="text" id="cityInput" placeholder="Enter city name..." />
-      <button onclick="getWeather()">Search</button>
-    </div>
-    <div class="loading" id="loading">Fetching weather...</div>
-    <div id="error"></div>
-    <div class="weather-card" id="weatherCard">
-      <div class="location" id="location"></div>
-      <img id="weatherIcon" src="" alt="weather icon" />
-      <div class="temp" id="temp"></div>
-      <div class="description" id="description"></div>
-      <div class="details">
-        <div class="detail-item">
-          <div class="value" id="feelsLike"></div>
-          <div class="label">Feels Like</div>
-        </div>
-        <div class="detail-item">
-          <div class="value" id="humidity"></div>
-          <div class="label">Humidity</div>
-        </div>
-        <div class="detail-item">
-          <div class="value" id="windSpeed"></div>
-          <div class="label">Wind Speed</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    async function getWeather() {
-      const city = document.getElementById('cityInput').value.trim();
-      if (!city) return alert('Please enter a city name');
-
-      document.getElementById('weatherCard').style.display = 'none';
-      document.getElementById('error').style.display = 'none';
-      document.getElementById('loading').style.display = 'block';
-
-      try {
-        const response = await fetch(`/.netlify/functions/weather?city=${encodeURIComponent(city)}`);
-        const data = await response.json();
-
-        document.getElementById('loading').style.display = 'none';
-
-        if (data.error) {
-          document.getElementById('error').textContent = 'City not found. Please try again.';
-          document.getElementById('error').style.display = 'block';
-          return;
-        }
-
-        document.getElementById('location').textContent = `${data.city}, ${data.country}`;
-        document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
-        document.getElementById('temp').textContent = `${Math.round(data.temperature)}°C`;
-        document.getElementById('description').textContent = data.description;
-        document.getElementById('feelsLike').textContent = `${Math.round(data.feels_like)}°C`;
-        document.getElementById('humidity').textContent = `${data.humidity}%`;
-        document.getElementById('windSpeed').textContent = `${data.wind_speed} m/s`;
-        document.getElementById('weatherCard').style.display = 'block';
-
-      } catch (err) {
-        document.getElementById('loading').style.display = 'none';
-        document.getElementById('error').textContent = 'Something went wrong. Try again.';
-        document.getElementById('error').style.display = 'block';
-      }
+      overflow: hidden;
+      transition: background 1s ease;
     }
 
-    document.getElementById('cityInput').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') getWeather();
-    });
-
-    // Load Cape Town by default
-    document.getElementById('cityInput').value = 'Cape Town';
-    getWeather();
-  </script>
-</body>
-</html>
+    /* ── Backgrounds ── */
+    .bg-sunny { background: linear-gradient(135deg, #f7971e, #ffd200); }
+    .bg-rainy { background: linear-gradient(135deg, #1c1c2e, #2d3561); }
+    .bg-cloudy { background: linear-gradient(135deg, #4b6cb7, #182848); }
+    .bg-windy { background: linear-gradient(135deg, #134e5e, #71b280); }
+    .bg-snowy { background: linear-gradient(135deg, #e0eafc, #cfdef3); color: #333; }
+    .bg-night { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+    .bg-default { background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460); }
