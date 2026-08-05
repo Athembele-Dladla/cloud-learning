@@ -299,8 +299,7 @@
           length: Math.random() * 60 + 30,
           opacity: Math.random() * 0.3 + 0.1
         });
-      } 
-
+      }
       function drawWind() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => {
@@ -345,3 +344,80 @@
         document.body.appendChild(cloud);
       }
     }
+
+    function applyWeatherEffect(description, windSpeed, isNight) {
+      clearEffects();
+      const desc = description.toLowerCase();
+
+      if (isNight) {
+        document.body.classList.add('bg-night');
+        initClouds();
+      } else if (desc.includes('rain') || desc.includes('drizzle') || desc.includes('shower')) {
+        document.body.classList.add('bg-rainy');
+        initRain();
+      } else if (desc.includes('snow') || desc.includes('sleet') || desc.includes('blizzard')) {
+        document.body.classList.add('bg-snowy');
+        initSnow();
+      } else if (desc.includes('cloud') || desc.includes('overcast')) {
+        document.body.classList.add('bg-cloudy');
+        initClouds();
+      } else if (windSpeed > 10) {
+        document.body.classList.add('bg-windy');
+        initWind();
+      } else if (desc.includes('clear') || desc.includes('sun')) {
+        document.body.classList.add('bg-sunny');
+        initSun();
+      } else {
+        document.body.classList.add('bg-default');
+      }
+    }
+
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      if (!city) return alert('Please enter a city name');
+
+      document.getElementById('weatherCard').style.display = 'none';
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('loading').style.display = 'block';
+
+      try {
+        const response = await fetch(`/.netlify/functions/weather?city=${encodeURIComponent(city)}`);
+        const data = await response.json();
+        document.getElementById('loading').style.display = 'none';
+
+        if (data.error) {
+          document.getElementById('error').textContent = 'City not found. Please try again.';
+          document.getElementById('error').style.display = 'block';
+          return;
+        }
+
+        const hour = new Date().getHours();
+        const isNight = hour < 6 || hour >= 19;
+
+        applyWeatherEffect(data.description, data.wind_speed, isNight);
+
+        document.getElementById('location').textContent = `${data.city}, ${data.country}`;
+        document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
+        document.getElementById('temp').textContent = `${Math.round(data.temperature)}°C`;
+        document.getElementById('description').textContent = data.description;
+        document.getElementById('feelsLike').textContent = `${Math.round(data.feels_like)}°C`;
+        document.getElementById('humidity').textContent = `${data.humidity}%`;
+        document.getElementById('windSpeed').textContent = `${data.wind_speed} m/s`;
+        document.getElementById('weatherCard').style.display = 'block';
+
+      } catch (err) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').textContent = 'Something went wrong. Try again.';
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    document.getElementById('cityInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') getWeather();
+    });
+
+    document.getElementById('cityInput').value = 'Cape Town';
+    getWeather();
+  </script>
+</body>
+</html>
