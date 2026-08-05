@@ -247,3 +247,56 @@
       });
       animationId = requestAnimationFrame(drawRain);
     }
+
+    // ── Sun rays ──
+    function initSun() {
+      document.getElementById('sun').style.display = 'block';
+      let angle = 0;
+      function drawRays() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const cx = canvas.width / 2;
+        const cy = 0;
+        for (let i = 0; i < 12; i++) {
+          const a = (angle + i * 30) * Math.PI / 180;
+          const gradient = ctx.createLinearGradient(cx, cy, cx + Math.cos(a) * 400, cy + Math.sin(a) * 400);
+          gradient.addColorStop(0, 'rgba(255,220,50,0.3)');
+          gradient.addColorStop(1, 'rgba(255,220,50,0)');
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(a) * 500, cy + Math.sin(a) * 500);
+          ctx.strokeStyle = gradient;
+          ctx.lineWidth = 30;
+          ctx.stroke();
+        }
+        angle += 0.3;
+        animationId = requestAnimationFrame(drawRays);
+      }
+      drawRays();
+    }
+
+    // ── Wind / trees ──
+    function initWind() {
+      const treesEl = document.getElementById('trees');
+      treesEl.style.display = 'block';
+      treesEl.innerHTML = '';
+      const positions = [5, 15, 25, 60, 72, 85, 93];
+      positions.forEach((left, i) => {
+        const tree = document.createElement('div');
+        tree.className = 'tree';
+        tree.style.left = left + '%';
+        tree.style.animationDelay = (i * 0.2) + 's';
+        tree.style.animationDuration = (1 + Math.random() * 0.8) + 's';
+        tree.textContent = '🌲';
+        treesEl.appendChild(tree);
+      });
+
+      // wind lines
+      for (let i = 0; i < 30; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          speed: Math.random() * 8 + 4,
+          length: Math.random() * 60 + 30,
+          opacity: Math.random() * 0.3 + 0.1
+        });
+      } }
