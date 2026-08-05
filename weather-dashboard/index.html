@@ -299,4 +299,49 @@
           length: Math.random() * 60 + 30,
           opacity: Math.random() * 0.3 + 0.1
         });
-      } }
+      } 
+
+      function drawWind() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p.x + p.length, p.y);
+          ctx.strokeStyle = `rgba(255,255,255,${p.opacity})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+          p.x += p.speed;
+          if (p.x > canvas.width) { p.x = -p.length; p.y = Math.random() * canvas.height; }
+        });
+        animationId = requestAnimationFrame(drawWind);
+      }
+      drawWind();
+    }
+
+    // ── Snow ──
+    function initSnow() {
+      for (let i = 0; i < 40; i++) {
+        const flake = document.createElement('div');
+        flake.className = 'snowflake';
+        flake.textContent = '❄';
+        flake.style.left = Math.random() * 100 + 'vw';
+        flake.style.animationDuration = (Math.random() * 4 + 3) + 's';
+        flake.style.animationDelay = (Math.random() * 5) + 's';
+        flake.style.fontSize = (Math.random() * 1 + 0.5) + 'rem';
+        document.body.appendChild(flake);
+      }
+    }
+
+    // ── Clouds ──
+    function initClouds() {
+      for (let i = 0; i < 5; i++) {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        cloud.textContent = '☁️';
+        cloud.style.top = (Math.random() * 40) + '%';
+        cloud.style.animationDuration = (Math.random() * 20 + 15) + 's';
+        cloud.style.animationDelay = (Math.random() * 10) + 's';
+        cloud.style.fontSize = (Math.random() * 3 + 3) + 'rem';
+        document.body.appendChild(cloud);
+      }
+    }
