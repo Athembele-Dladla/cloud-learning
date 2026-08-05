@@ -133,3 +133,117 @@
       0%, 100% { transform: rotate(-8deg); }
       50% { transform: rotate(8deg); }
     }
+
+    /* ── Snow ── */
+    .snowflake {
+      position: fixed;
+      top: -20px;
+      color: white;
+      font-size: 1.2rem;
+      animation: snowfall linear infinite;
+      z-index: 0;
+    }
+    @keyframes snowfall {
+      0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ── Clouds ── */
+    .cloud {
+      position: fixed;
+      font-size: 4rem;
+      opacity: 0.6;
+      animation: drift linear infinite;
+      z-index: 0;
+    }
+    @keyframes drift {
+      0% { transform: translateX(-200px); }
+      100% { transform: translateX(110vw); }
+    }
+  </style>
+</head>
+<body class="bg-default">
+
+  <canvas id="weatherCanvas"></canvas>
+  <div class="sun" id="sun"></div>
+  <div class="trees" id="trees"></div>
+
+  <div class="container">
+    <h1>🌤️ Weather Dashboard</h1>
+    <div class="search">
+      <input type="text" id="cityInput" placeholder="Enter city name..." />
+      <button onclick="getWeather()">Search</button>
+    </div>
+    <div class="loading" id="loading">Fetching weather...</div>
+    <div id="error"></div>
+    <div class="weather-card" id="weatherCard">
+      <div class="location" id="location"></div>
+      <img id="weatherIcon" src="" alt="weather icon" />
+      <div class="temp" id="temp"></div>
+      <div class="description" id="description"></div>
+      <div class="details">
+        <div class="detail-item">
+          <div class="value" id="feelsLike"></div>
+          <div class="label">Feels Like</div>
+        </div>
+        <div class="detail-item">
+          <div class="value" id="humidity"></div>
+          <div class="label">Humidity</div>
+        </div>
+        <div class="detail-item">
+          <div class="value" id="windSpeed"></div>
+          <div class="label">Wind Speed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('weatherCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    let animationId = null;
+    let particles = [];
+
+    function clearEffects() {
+      if (animationId) cancelAnimationFrame(animationId);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles = [];
+      document.getElementById('sun').style.display = 'none';
+      document.getElementById('trees').style.display = 'none';
+      document.querySelectorAll('.snowflake, .cloud').forEach(el => el.remove());
+      document.body.className = '';
+    }
+
+    // ── Rain ──
+    function initRain() {
+      for (let i = 0; i < 150; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          speed: Math.random() * 6 + 4,
+          length: Math.random() * 20 + 10,
+          opacity: Math.random() * 0.5 + 0.3
+        });
+      }
+    }
+    function drawRain() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = 'rgba(174, 214, 241, 0.6)';
+      ctx.lineWidth = 1.5;
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x - 2, p.y + p.length);
+        ctx.stroke();
+        p.y += p.speed;
+        if (p.y > canvas.height) { p.y = -p.length; p.x = Math.random() * canvas.width; }
+      });
+      animationId = requestAnimationFrame(drawRain);
+    }
