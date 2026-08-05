@@ -1,15 +1,16 @@
 # ☁️ Cloud Projects
 
+> Verification code: `WTC-T8ENJDT7`
+
 A collection of beginner cloud projects built while learning cloud platforms.
 
 ## 📁 Projects
-
 | Project | Description | Platform | Status |
 |---|---|---|---|
 | `static-website` | HTML/CSS site hosted on cloud storage | GitHub Pages | ✅ Done |
 | `serverless-hello-world` | HTTP-triggered serverless function | Netlify Functions | ✅ Done |
 | `url-shortener` | Short URL generator using a cloud database | Netlify Functions + Supabase | ✅ Done |
-| `weather-dashboard` | Fetches and displays live weather data | Netlify Functions + OpenWeatherMap | 🚧 In Progress |
+| `weather-dashboard` | Fetches and displays live weather data | Netlify Functions + OpenWeatherMap | ✅ Done |
 | `file-upload-app` | Upload files to cloud storage | Firebase Storage | 🔜 Coming Soon |
 
 ## 🛠️ Tools & Platforms
@@ -17,7 +18,7 @@ A collection of beginner cloud projects built while learning cloud platforms.
 - **Supabase** — PostgreSQL cloud database
 - **GitHub Pages** — Static site hosting
 - **OpenWeatherMap** — Weather API
-- **Languages** — HTML, CSS, JavaScript, Python
+- **Languages** — HTML, CSS, JavaScript
 
 ## 🎯 Goal
 Work through beginner cloud concepts including:
