@@ -101,3 +101,51 @@
       </div>
     </div>
   </div>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById('cityInput').value.trim();
+      if (!city) return alert('Please enter a city name');
+
+      document.getElementById('weatherCard').style.display = 'none';
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('loading').style.display = 'block';
+
+      try {
+        const response = await fetch(`/.netlify/functions/weather?city=${encodeURIComponent(city)}`);
+        const data = await response.json();
+
+        document.getElementById('loading').style.display = 'none';
+
+        if (data.error) {
+          document.getElementById('error').textContent = 'City not found. Please try again.';
+          document.getElementById('error').style.display = 'block';
+          return;
+        }
+
+        document.getElementById('location').textContent = `${data.city}, ${data.country}`;
+        document.getElementById('weatherIcon').src = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
+        document.getElementById('temp').textContent = `${Math.round(data.temperature)}°C`;
+        document.getElementById('description').textContent = data.description;
+        document.getElementById('feelsLike').textContent = `${Math.round(data.feels_like)}°C`;
+        document.getElementById('humidity').textContent = `${data.humidity}%`;
+        document.getElementById('windSpeed').textContent = `${data.wind_speed} m/s`;
+        document.getElementById('weatherCard').style.display = 'block';
+
+      } catch (err) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('error').textContent = 'Something went wrong. Try again.';
+        document.getElementById('error').style.display = 'block';
+      }
+    }
+
+    document.getElementById('cityInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') getWeather();
+    });
+
+    // Load Cape Town by default
+    document.getElementById('cityInput').value = 'Cape Town';
+    getWeather();
+  </script>
+</body>
+</html>
