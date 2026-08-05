@@ -63,3 +63,73 @@
       outline: none;
     }
     input::placeholder { color: rgba(255,255,255,0.6); }
+
+    button {
+      padding: 0.75rem 1.25rem;
+      background: #e94560;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background: #c73652; }
+
+    .weather-card { text-align: center; display: none; }
+    .weather-card img { width: 80px; height: 80px; }
+    .temp { font-size: 4rem; font-weight: bold; margin: 0.5rem 0; }
+    .description { font-size: 1.2rem; text-transform: capitalize; margin-bottom: 1.5rem; color: rgba(255,255,255,0.8); }
+
+    .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+    .detail-item { text-align: center; }
+    .detail-item .value { font-size: 1.2rem; font-weight: bold; }
+    .detail-item .label { font-size: 0.8rem; color: rgba(255,255,255,0.6); margin-top: 0.25rem; }
+    .location { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.25rem; }
+
+    #error { color: #e94560; text-align: center; display: none; margin-top: 1rem; }
+    .loading { text-align: center; display: none; }
+
+    /* ── Sun rays ── */
+    .sun {
+      position: fixed;
+      top: -80px; left: 50%;
+      transform: translateX(-50%);
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, #ffe259, #ffa751);
+      border-radius: 50%;
+      box-shadow: 0 0 80px 40px rgba(255,220,50,0.4);
+      animation: pulse 3s infinite ease-in-out;
+      z-index: 0;
+      display: none;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 80px 40px rgba(255,220,50,0.4); }
+      50% { box-shadow: 0 0 120px 80px rgba(255,220,50,0.6); }
+    }
+
+    /* ── Trees for wind ── */
+    .trees {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      display: none;
+      z-index: 0;
+    }
+    .tree {
+      position: absolute;
+      bottom: 0;
+      font-size: 5rem;
+      animation: sway 1.5s infinite ease-in-out;
+      transform-origin: bottom center;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-8deg); }
+      50% { transform: rotate(8deg); }
+    }
