@@ -19,3 +19,30 @@ exports.handler = async (event) => {
   
     const formData = `file=${encodeURIComponent(file)}&timestamp=${timestamp}&api_key=${apiKey}&signature=${signature}`;
   
+    const response = await fetch(
+      `https://api.cloudinary.com/v1_1/${cloudName}/auto/upload`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData
+      }
+    );
+  
+    const data = await response.json();
+  
+    if (data.error) {
+      return { statusCode: 400, body: JSON.stringify({ error: data.error.message }) };
+    }
+  
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        url: data.secure_url,
+        publicId: data.public_id,
+        format: data.format,
+        size: data.bytes,
+        width: data.width,
+        height: data.height
+      })
+    };
+  };
