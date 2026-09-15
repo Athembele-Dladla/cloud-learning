@@ -30,3 +30,38 @@ describe('upload function', () => {
         fileType: 'image/png'
       })
     };
+
+    const result = await handler(event);
+    expect(result.statusCode).toBe(400);
+    expect(JSON.parse(result.body).error).toBe('Invalid image file');
+  });
+
+  test('returns 200 with file URL on successful upload', async () => {
+    global.fetch.mockResolvedValueOnce({
+      json: async () => ({
+        secure_url: 'https://res.cloudinary.com/test-cloud/image/upload/test.png',
+        public_id: 'test',
+        format: 'png',
+        bytes: 1024,
+        width: 100,
+        height: 100
+      })
+    });
+
+    const event = {
+      httpMethod: 'POST',
+      body: JSON.stringify({
+        file: 'data:image/png;base64,abc123',
+        fileName: 'test.png',
+        fileType: 'image/png'
+      })
+    };
+
+    const result = await handler(event);
+    expect(result.statusCode).toBe(200);
+    const body = JSON.parse(result.body);
+    expect(body.url).toBe('https://res.cloudinary.com/test-cloud/image/upload/test.png');
+    expect(body.size).toBe(1024);
+  });
+
+});
