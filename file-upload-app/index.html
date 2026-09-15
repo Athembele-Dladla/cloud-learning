@@ -177,3 +177,79 @@
       document.getElementById('result').style.display = 'none';
       document.getElementById('error').style.display = 'none';
     }
+
+    async function uploadFile() {
+      if (!selectedFile) return;
+
+      document.getElementById('status').style.display = 'block';
+      document.getElementById('status').textContent = 'Uploading...';
+      document.getElementById('progressBar').style.display = 'block';
+      document.getElementById('progressFill').style.width = '30%';
+      document.getElementById('error').style.display = 'none';
+      document.getElementById('result').style.display = 'none';
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        const base64 = e.target.result;
+
+        document.getElementById('progressFill').style.width = '60%';
+
+        try {
+          const response = await fetch('/.netlify/functions/upload', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              file: base64,
+              fileName: selectedFile.name,
+              fileType: selectedFile.type
+            })
+          });
+
+          const data = await response.json();
+          document.getElementById('progressFill').style.width = '100%';
+
+          if (data.error) {
+            document.getElementById('error').textContent = 'Upload failed: ' + data.error;
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('status').style.display = 'none';
+            return;
+          }
+
+          document.getElementById('status').style.display = 'none';
+          document.getElementById('progressBar').style.display = 'none';
+
+          if (selectedFile.type.startsWith('image/')) {
+            document.getElementById('previewImg').src = data.url;
+            document.getElementById('previewImg').style.display = 'block';
+          }
+
+          document.getElementById('fileInfo').innerHTML = `
+            <strong>File:</strong> ${selectedFile.name}<br>
+            <strong>Type:</strong> ${selectedFile.type || 'unknown'}<br>
+            <strong>Size:</strong> ${(data.size / 1024).toFixed(1)} KB<br>
+            <strong>URL:</strong> <a href="${data.url}" target="_blank" style="color:#e94560">${data.url}</a>
+          `;
+
+          document.getElementById('result').style.display = 'block';
+          window._uploadedUrl = data.url;
+
+        } catch (err) {
+          document.getElementById('error').textContent = 'Something went wrong. Try again.';
+          document.getElementById('error').style.display = 'block';
+          document.getElementById('status').style.display = 'none';
+        }
+      };
+
+      reader.readAsDataURL(selectedFile);
+    }
+
+    function copyUrl() {
+      navigator.clipboard.writeText(window._uploadedUrl);
+      document.querySelector('.copy-btn').textContent = '✅ Copied!';
+      setTimeout(() => {
+        document.querySelector('.copy-btn').textContent = '📋 Copy File URL';
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
