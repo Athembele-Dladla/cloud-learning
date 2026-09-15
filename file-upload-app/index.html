@@ -35,3 +35,109 @@
       transition: all 0.3s;
       margin-bottom: 1.5rem;
     }
+    .upload-area:hover { border-color: #e94560; background: rgba(233,69,96,0.1); }
+    .upload-area.dragover { border-color: #e94560; background: rgba(233,69,96,0.2); }
+    .upload-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .upload-area p { color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; }
+    .upload-area span { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+    input[type="file"] { display: none; }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background: #e94560;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      display: none;
+    }
+    button:hover { background: #c73652; }
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 3px;
+      margin: 1rem 0;
+      display: none;
+    }
+    .progress-fill {
+      height: 100%;
+      background: #e94560;
+      border-radius: 3px;
+      width: 0%;
+      transition: width 0.3s;
+    }
+    #status { text-align: center; margin: 1rem 0; color: rgba(255,255,255,0.7); display: none; }
+    #result { display: none; margin-top: 1.5rem; }
+    .result-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.25rem;
+    }
+    .result-card h3 { margin-bottom: 1rem; color: #4caf50; }
+    .result-card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      max-height: 200px;
+      object-fit: cover;
+    }
+    .file-info { font-size: 0.85rem; color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; }
+    .copy-btn {
+      width: 100%;
+      padding: 0.5rem;
+      background: rgba(255,255,255,0.1);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      margin-top: 0.5rem;
+      display: block;
+    }
+    .copy-btn:hover { background: rgba(255,255,255,0.2); }
+    #error { color: #e94560; text-align: center; display: none; margin-top: 1rem; }
+    .selected-file {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      display: none;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>☁️ File Upload App</h1>
+    <p class="subtitle">Upload files to the cloud instantly</p>
+
+    <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+      <div class="upload-icon">📁</div>
+      <p>Drag & drop a file here</p>
+      <p>or click to browse</p>
+      <span>Supports images, videos, PDFs and more</span>
+    </div>
+
+    <input type="file" id="fileInput" />
+    <div class="selected-file" id="selectedFile"></div>
+
+    <div class="progress-bar" id="progressBar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div id="status"></div>
+    <div id="error"></div>
+
+    <button id="uploadBtn" onclick="uploadFile()">Upload to Cloud ☁️</button>
+
+    <div id="result">
+      <div class="result-card">
+        <h3>✅ Upload Successful!</h3>
+        <img id="previewImg" src="" alt="preview" style="display:none"/>
+        <div class="file-info" id="fileInfo"></div>
+        <button class="copy-btn" onclick="copyUrl()">📋 Copy File URL</button>
+      </div>
+    </div>
+  </div>
