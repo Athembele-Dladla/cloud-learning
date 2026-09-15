@@ -31,3 +31,10 @@ Work through beginner cloud concepts including:
 
 ## 📌 Status
 ✅ All projects completed!
+
+## 🔗 Live Projects
+- [Static Portfolio](https://athembele-dladla.github.io/cloud-learning/)
+- [Serverless Hello World](https://athembele-hello-world.netlify.app/.netlify/functions/hello)
+- [URL Shortener](https://athembele-url-shortener.netlify.app)
+- [Weather Dashboard](https://athembele-weather-dashboard.netlify.app)
+- [File Upload App](https://athembele-file-upload-app.netlify.app)
