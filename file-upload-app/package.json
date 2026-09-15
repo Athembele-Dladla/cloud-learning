@@ -1,0 +1,16 @@
+{
+  "name": "file-upload-app",
+  "version": "1.0.0",
+  "description": "A cloud file upload application that lets users upload files directly to Cloudinary storage via a serverless function.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jest": "^30.5.1"
+  }
+}
