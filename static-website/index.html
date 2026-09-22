@@ -312,3 +312,98 @@
       </ul>
     </div>
   </section>
+
+  <!-- Projects -->
+  <section id="projects" class="fade-in">
+    <h2>Projects</h2>
+    <div class="section-divider"></div>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3>🌦️ Weather Pipeline</h3>
+        <p>Weather monitoring pipeline built in Python using the ETL pattern. Fetches live weather data from an API, transforms and structures it, and generates alerts.</p>
+        <a href="https://github.com/Athembele-Dladla/weather-pipeline" target="_blank">View on GitHub →</a>
+      </div>
+      <div class="project-card">
+        <h3>🔗 URL Shortener</h3>
+        <p>A serverless URL shortener built with Netlify Functions and Supabase PostgreSQL backend.</p>
+        <a href="https://athembele-url-shortener.netlify.app" target="_blank">Live Demo →</a>
+      </div>
+      <div class="project-card">
+        <h3>🌤️ Weather Dashboard</h3>
+        <p>Live weather dashboard with animated backgrounds — rain, sun rays, swaying trees and more based on real conditions.</p>
+        <a href="https://athembele-weather-dashboard.netlify.app" target="_blank">Live Demo →</a>
+      </div>
+      <div class="project-card">
+        <h3>☁️ File Upload App</h3>
+        <p>Cloud file upload app with drag & drop, image preview, and permanent Cloudinary storage.</p>
+        <a href="https://athembele-file-upload-app.netlify.app" target="_blank">Live Demo →</a>
+      </div>
+      <div class="project-card">
+        <h3>🧮 Calculator App</h3>
+        <p>A fast, easy to use calculator supporting basic arithmetic and advanced calculations.</p>
+        <a href="https://github.com/Athembele-Dladla/calculator-app" target="_blank">View on GitHub →</a>
+      </div>
+      <div class="project-card">
+        <h3>🔐 Login Form</h3>
+        <p>A login form with HTML, CSS and JavaScript that validates user credentials and displays error messages.</p>
+        <a href="https://github.com/Athembele-Dladla/loginForm" target="_blank">View on GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Languages -->
+  <section id="languages" class="fade-in">
+    <h2>Languages</h2>
+    <div class="section-divider"></div>
+    <div class="lang-grid">
+      <div class="lang-card">
+        <div class="lang-name">isiZulu</div>
+        <div class="lang-level">Speak · Read · Write</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-name">isiXhosa</div>
+        <div class="lang-level">Speak · Understand</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-name">Sesotho</div>
+        <div class="lang-level">Speak · Understand</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-name">English</div>
+        <div class="lang-level">Speak · Read · Write</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-name">Afrikaans</div>
+        <div class="lang-level">Write · Understand</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="fade-in">
+    <h2>Get In Touch</h2>
+    <div class="section-divider"></div>
+    <div class="contact-links">
+      <a href="mailto:dladlaathembele@gmail.com" class="contact-link">📧 dladlaathembele@gmail.com</a>
+      <a href="tel:0761868065" class="contact-link">📞 076 186 8065</a>
+      <a href="https://github.com/Athembele-Dladla" target="_blank" class="contact-link">🐙 GitHub</a>
+      <a href="https://linkedin.com/in/athembele-dladla" target="_blank" class="contact-link">💼 LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>Built with HTML & CSS · Hosted on GitHub Pages · © 2026 Athembele Dladla</p>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
